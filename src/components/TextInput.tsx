@@ -1,4 +1,4 @@
-import { UseFormRegister, useFormState } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { EmployeeForm } from "../schema/Employee";
 
 type TextInputProps = {
@@ -25,7 +25,7 @@ function TextInput({
         type={type}
         placeholder="Type here"
         {...register(name)}
-        className="input input-bordered w-full max-w-xs"
+        className="input input-bordered outer w-full max-w-xs "
       />
       <div className="label h-6">
         {error && <span className="label-text-alt text-error">{error}</span>}
