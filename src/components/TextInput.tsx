@@ -25,7 +25,9 @@ function TextInput({
         type={type}
         placeholder="Type here"
         {...register(name)}
-        className="input input-bordered outer w-full max-w-xs "
+        className={`input input-bordered outer w-full max-w-xs ${
+          error && "border-error"
+        }`}
       />
       <div className="label h-6">
         {error && <span className="label-text-alt text-error">{error}</span>}

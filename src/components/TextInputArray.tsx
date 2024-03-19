@@ -25,7 +25,9 @@ function TextInputArray({ control, register, error }: TextInputArrayProps) {
               <li key={item.id} className="flex gap-4 items-start">
                 <div>
                   <input
-                    className="input input-bordered souter max-w-xs"
+                    className={`input input-bordered souter max-w-xs ${
+                      error && "border-error"
+                    }`}
                     {...register(`addresses.${index}.address`, {
                       required: true,
                     })}
