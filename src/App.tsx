@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { EmployeeFormSchema, EmployeeForm } from "./schema/Employee";
 import TextInput from "./components/TextInput";
 import TextInputArray from "./components/TextInputArray";
+import { PrimaryBtn } from "./components/Button";
 
 function App() {
   const {
@@ -10,6 +11,7 @@ function App() {
     formState: { errors },
     control,
     handleSubmit,
+    reset,
   } = useForm<EmployeeForm>({
     resolver: yupResolver(EmployeeFormSchema),
     defaultValues: {
@@ -21,34 +23,38 @@ function App() {
 
   const onSubmit: SubmitHandler<EmployeeForm> = (data) => {
     console.log(data);
+    reset();
   };
 
   return (
-    <div data-theme="nord" className="bg-base-300 h-dvh text-center p-3">
+    <div
+      data-theme="nord"
+      className="bg-base-300 h-dvh flex flex-col items-center text-center p-3"
+    >
       <h1 className="text-3xl font-bold">Employee Registration Form</h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="grid place-items-center mt-10"
+        className="grid justify-center mt-10 w-[30rem] bg-white py-5 rounded-lg shadow-lg"
       >
         <TextInput
           label="what is your name?"
-          name="name"
           error={errors.name?.message}
-          register={register}
+          register={{ ...register("name") }}
         />
         <TextInput
           label="what is your age?"
-          name="age"
           type="number"
           error={errors.age?.message}
-          register={register}
+          register={{ ...register("age") }}
         />
-
-        <TextInputArray control={control} register={register} />
-
-        <button type="submit" className="btn mt-5 rounded-lg px-10 btn-success">
+        <TextInputArray
+          control={control}
+          register={register}
+          error={errors.addresses?.message}
+        />
+        <PrimaryBtn variant="success" type="submit">
           Register
-        </button>
+        </PrimaryBtn>
       </form>
     </div>
   );

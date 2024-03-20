@@ -1,5 +1,8 @@
 import { Control, useFieldArray, UseFormRegister } from "react-hook-form";
 import { EmployeeForm } from "../schema/Employee";
+import { SecondaryBtn } from "./Button";
+import TextInput from "./TextInput";
+import { Select } from "./Select";
 
 type TextInputArrayProps = {
   control: Control<EmployeeForm>;
@@ -19,20 +22,18 @@ function TextInputArray({ control, register, error }: TextInputArrayProps) {
         <span className="label-text">Address</span>
       </div>
       <div className="flex gap-4">
-        <ul className="grid gap-4">
+        <ul className="grid">
           {fields.map((item, index) => {
             return (
-              <li key={item.id} className="flex gap-4 items-start">
+              <li key={item.id} className="flex gap-2 items-start">
                 <div>
-                  <input
-                    className={`input input-bordered souter max-w-xs ${
-                      error && "border-error"
-                    }`}
-                    {...register(`addresses.${index}.address`, {
-                      required: true,
-                    })}
+                  <TextInput
+                    register={{
+                      ...register(`addresses.${index}.address`),
+                    }}
+                    error={error}
                   />
-                  <div className="label h-6">
+                  <div className="label min-h-6">
                     {error && (
                       <span className="label-text-alt text-error">
                         {"Address is required"}
@@ -40,29 +41,22 @@ function TextInputArray({ control, register, error }: TextInputArrayProps) {
                     )}
                   </div>
                 </div>
-                <select
-                  className="select select-bordered max-w-xs"
-                  {...register(`addresses.${index}.type`)}
-                >
-                  <option value="home">home</option>
-                  <option value="work">work</option>
-                </select>
+                <Select
+                  register={{ ...register(`addresses.${index}.type`) }}
+                  data={["home", "work"]}
+                />
                 {index > 0 ? (
-                  <button
-                    type="button"
-                    className="btn text-white btn-circle btn-error btn-sm mt-2"
-                    onClick={() => remove(index)}
-                  >
-                    &#10005;
-                  </button>
+                  // render remove button if there is more than one address
+                  <SecondaryBtn variant="error" onClick={() => remove(index)}>
+                    &#10005; {/* unicode for cross */}
+                  </SecondaryBtn>
                 ) : (
-                  <button
-                    type="button"
-                    className="btn btn-secondary btn-circle text-white btn-sm mt-2"
+                  // render add button if its the first address
+                  <SecondaryBtn
                     onClick={() => append({ address: "", type: "home" })}
                   >
-                    &#10010;
-                  </button>
+                    &#10010; {/* unicode for plus */}
+                  </SecondaryBtn>
                 )}
               </li>
             );

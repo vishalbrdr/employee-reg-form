@@ -1,32 +1,34 @@
-import { UseFormRegister } from "react-hook-form";
-import { EmployeeForm } from "../schema/Employee";
+import { UseFormRegisterReturn } from "react-hook-form";
 
 type TextInputProps = {
-  register: UseFormRegister<EmployeeForm>;
-  label: string;
-  name: "name" | "age";
+  register: UseFormRegisterReturn;
+  label?: string;
   error?: string;
   type?: string;
+  placeholder?: string;
 };
 
 function TextInput({
   register,
   label,
-  name,
   error,
-  type = "text",
+  type,
+  placeholder,
 }: TextInputProps) {
   return (
     <label className="form-control w-full max-w-xs">
-      <div className="label">
-        <span className="label-text">{label}</span>
-      </div>
+      {/* label of the forminput */}
+      {label && (
+        <div className="label">
+          <span className="label-text">{label}</span>
+        </div>
+      )}
       <input
-        type={type}
-        placeholder="Type here"
-        {...register(name)}
-        className={`input input-bordered outer w-full max-w-xs ${
-          error && "border-error"
+        type={type || "text"}
+        placeholder={placeholder || "Type here"}
+        {...register}
+        className={`input input-bordered w-full max-w-xs ${
+          error && "input-error"
         }`}
       />
       <div className="label h-6">

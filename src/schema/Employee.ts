@@ -6,8 +6,7 @@ export const EmployeeFormSchema = yup.object().shape({
     .array()
     .of(
       yup
-        .object()
-        .shape({
+        .object({
           address: yup.string().required(),
           type: yup.string().oneOf(["home", "work"]).required(),
         })
