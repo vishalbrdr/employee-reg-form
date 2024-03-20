@@ -1,9 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { EmployeeFormSchema, EmployeeForm } from "./schema/Employee";
-import TextInput from "./components/TextInput";
-import AddressInput from "./components/EmployeeRegForm/AddressInput";
-import { PrimaryBtn } from "./components/Button";
+import EmployeeRegForm from "./components/EmployeeRegForm";
 
 function App() {
   const methods = useForm<EmployeeForm>({
@@ -15,11 +13,6 @@ function App() {
     },
   });
 
-  const onSubmit: SubmitHandler<EmployeeForm> = (data) => {
-    console.log(data);
-    methods.reset();
-  };
-
   return (
     <div
       data-theme="nord"
@@ -27,17 +20,7 @@ function App() {
     >
       <h1 className="text-3xl font-bold">Employee Registration Form</h1>
       <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="grid justify-center mt-10 w-[30rem] bg-white py-5 rounded-lg shadow-lg"
-        >
-          <TextInput name="name" label="what is your name?" />
-          <TextInput name="age" label="what is your age?" type="number" />
-          <AddressInput />
-          <PrimaryBtn variant="success" className="mt-4" type="submit">
-            Register
-          </PrimaryBtn>
-        </form>
+        <EmployeeRegForm />
       </FormProvider>
     </div>
   );
