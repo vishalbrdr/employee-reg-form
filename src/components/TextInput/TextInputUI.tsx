@@ -1,41 +1,42 @@
-import { UseFormRegisterReturn } from "react-hook-form";
+import {
+  ControllerRenderProps,
+  FieldValues,
+} from "react-hook-form";
+import { ErrorMessage } from "../ErrorMessage";
 
-type TextInputProps = {
-  register: UseFormRegisterReturn;
+type TextInputUIProps = {
   label?: string;
-  error?: string;
   type?: string;
   placeholder?: string;
+  field: ControllerRenderProps<FieldValues, string>;
+  error?: string;
 };
 
-function TextInput({
-  register,
+function TextInputUI({
   label,
-  error,
   type,
   placeholder,
-}: TextInputProps) {
+  field,
+  error,
+}: TextInputUIProps) {
   return (
     <label className="form-control w-full max-w-xs">
-      {/* label of the forminput */}
       {label && (
         <div className="label">
           <span className="label-text">{label}</span>
         </div>
       )}
       <input
+        {...field}
         type={type || "text"}
         placeholder={placeholder || "Type here"}
-        {...register}
         className={`input input-bordered w-full max-w-xs ${
-          error && "input-error"
+          error ? "input-error" : ""
         }`}
       />
-      <div className="label h-6">
-        {error && <span className="label-text-alt text-error">{error}</span>}
-      </div>
+      <ErrorMessage error={error} />
     </label>
   );
 }
 
-export default TextInput;
+export default TextInputUI;

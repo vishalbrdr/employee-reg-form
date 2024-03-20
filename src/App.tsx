@@ -1,29 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
 import { EmployeeFormSchema, EmployeeForm } from "./schema/Employee";
 import TextInput from "./components/TextInput";
-import TextInputArray from "./components/TextInputArray";
+import AddressInput from "./components/EmployeeRegForm/AddressInput";
 import { PrimaryBtn } from "./components/Button";
 
 function App() {
-  const {
-    register,
-    formState: { errors },
-    control,
-    handleSubmit,
-    reset,
-  } = useForm<EmployeeForm>({
+  const methods = useForm<EmployeeForm>({
     resolver: yupResolver(EmployeeFormSchema),
     defaultValues: {
       name: "",
-      age: 18,
-      addresses: [{}],
+      age: 0,
+      addresses: [{ address: "", type: "home" }],
     },
   });
 
   const onSubmit: SubmitHandler<EmployeeForm> = (data) => {
     console.log(data);
-    reset();
+    methods.reset();
   };
 
   return (
@@ -32,30 +26,19 @@ function App() {
       className="bg-base-300 h-dvh flex flex-col items-center text-center p-3"
     >
       <h1 className="text-3xl font-bold">Employee Registration Form</h1>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid justify-center mt-10 w-[30rem] bg-white py-5 rounded-lg shadow-lg"
-      >
-        <TextInput
-          label="what is your name?"
-          error={errors.name?.message}
-          register={{ ...register("name") }}
-        />
-        <TextInput
-          label="what is your age?"
-          type="number"
-          error={errors.age?.message}
-          register={{ ...register("age") }}
-        />
-        <TextInputArray
-          control={control}
-          register={register}
-          error={errors.addresses?.message}
-        />
-        <PrimaryBtn variant="success" type="submit">
-          Register
-        </PrimaryBtn>
-      </form>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="grid justify-center mt-10 w-[30rem] bg-white py-5 rounded-lg shadow-lg"
+        >
+          <TextInput name="name" label="what is your name?" />
+          <TextInput name="age" label="what is your age?" type="number" />
+          <AddressInput />
+          <PrimaryBtn variant="success" className="mt-4" type="submit">
+            Register
+          </PrimaryBtn>
+        </form>
+      </FormProvider>
     </div>
   );
 }
