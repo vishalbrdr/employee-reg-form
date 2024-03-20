@@ -23,3 +23,7 @@ npm install
 ```
 npm run dev
 ```
+
+5. dev server will start at [localhost:5173](http://localhost:5173/)
+
+loom video link: [employee-reg-form](https://www.loom.com/share/38644aa8f3d9446c8bad1be63ff58266)
