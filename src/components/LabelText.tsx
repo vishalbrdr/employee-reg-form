@@ -3,6 +3,7 @@ type LabelTextProps = {
 };
 
 function LabelText({ children }: LabelTextProps) {
+  if (!children) return null;
   return (
     <div className="label">
       <span className="label-text">{children}</span>

@@ -1,8 +1,6 @@
-import {
-  ControllerRenderProps,
-  FieldValues,
-} from "react-hook-form";
+import { ControllerRenderProps, FieldValues } from "react-hook-form";
 import { ErrorMessage } from "../ErrorMessage";
+import LabelText from "../LabelText";
 
 type TextInputUIProps = {
   label?: string;
@@ -21,11 +19,7 @@ function TextInputUI({
 }: TextInputUIProps) {
   return (
     <label className="form-control w-full max-w-xs">
-      {label && (
-        <div className="label">
-          <span className="label-text">{label}</span>
-        </div>
-      )}
+      <LabelText>{label}</LabelText>
       <input
         {...field}
         type={type || "text"}
