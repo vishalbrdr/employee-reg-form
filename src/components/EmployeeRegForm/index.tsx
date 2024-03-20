@@ -3,7 +3,7 @@ import TextInput from "../TextInput";
 import EmployeeFormAddressInput from "./AddressInput";
 import { PrimaryBtn } from "../Button";
 
-function index() {
+function EmployeeRegForm() {
   const { reset, handleSubmit } = useFormContext();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -26,4 +26,4 @@ function index() {
   );
 }
 
-export default index;
+export default EmployeeRegForm;
