@@ -2,7 +2,7 @@ import { useFieldArray, useFormContext } from "react-hook-form";
 import { SecondaryBtn } from "../Button";
 import TextInput from "../TextInput";
 import Select from "../Select";
-import LabelText from "../LabelText";
+import LabelText from "../utils/LabelText";
 
 function AddressInput() {
   const { control } = useFormContext();

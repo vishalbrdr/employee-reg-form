@@ -5,7 +5,7 @@ type ErrorMessageProps = {
 function ErrorMessage({ error }: ErrorMessageProps) {
   if (!error) return null;
   return (
-    <div className="label h-6">
+    <div className="label">
       <span className="label-text-alt text-error">{error}</span>
     </div>
   );
