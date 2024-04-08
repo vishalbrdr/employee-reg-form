@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getObectFromS3 } from "../utils/aws/s3/getObject";
 import { PrimaryBtn } from "../components/Button";
 import { Heading1 } from "../components/Heading";
+
 function Dashboard() {
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ function Dashboard() {
     }
 
     (async () => {
+      if (!user.picture) return;
       const url = await getObectFromS3(user.picture);
       setUrl(url);
     })();

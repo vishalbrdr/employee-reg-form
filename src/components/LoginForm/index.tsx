@@ -3,48 +3,15 @@ import TextInput from "../TextInput";
 import { PrimaryBtn } from "../Button";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import useQuery from "../../hooks/useQuery";
 import toast from "react-hot-toast";
 import { LoginApiOutput } from "../../utils/types/LoginApiOutput";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/useAuthStore";
 
 function LoginForm() {
   const { reset, handleSubmit } = useFormContext();
-  const query = useQuery();
   const navigate = useNavigate();
-  const { user, setUser } = useAuthStore();
-
-  useEffect(() => {
-    if (user) {
-      navigate("/");
-    }
-
-    (async () => {
-      const username = query.get("username");
-      const code = query.get("code");
-      if (!username || !code) return;
-
-      toast.loading("verifying please wait", { id: "verify" });
-
-      try {
-        await axios.post("http://localhost:3000/verfy-signup", {
-          username,
-          code,
-        });
-        toast.success(
-          "Account verified successfully, please login to continue",
-          { duration: 4000 }
-        );
-      } catch (error) {
-        toast.error("Invalid or expired verification link");
-      } finally {
-        toast.dismiss("verify");
-        navigate("/login");
-      }
-    })();
-  }, []);
+  const { setUser } = useAuthStore();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
